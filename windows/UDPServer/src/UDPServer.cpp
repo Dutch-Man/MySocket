@@ -1,46 +1,66 @@
 #include "UDPServer.h"
 
+
+
+//#include "UDPServer.h"
+
 UDPServer::UDPServer()
 {
-    WORD sockVersion = MAKEWORD(2, 2);
-    if (WSAStartup(sockVersion, &wsaData) != 0)
-    {
-	return;
-    }
-    serSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (serSocket == INVALID_SOCKET)
-    {
-	printf("socket error !");
-	return;
-    }
+	WORD sockVersion = MAKEWORD(2, 2);
+	if (WSAStartup(sockVersion, &wsaData) != 0)
+	{
+		return;
+	}
+	serSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if (serSocket == INVALID_SOCKET)
+	{
+		printf("socket error !");
+		return;
+	}
 }
 
-//ç»‘å®šåˆ°ç«¯å£portï¼ŒæˆåŠŸè¿”å›0ï¼Œå¤±è´¥è¿”å›-1
+//°ó¶¨µ½¶Ë¿Úport£¬³É¹¦·µ»Ø0£¬Ê§°Ü·µ»Ø-1
 int UDPServer::startserver(int port)
 {
-    serAddr.sin_family = AF_INET;
-    serAddr.sin_port = htons(port);
-    serAddr.sin_addr.S_un.S_addr = INADDR_ANY;
-    int flag = bind(serSocket, (sockaddr *)&serAddr, sizeof(serAddr)) == SOCKET_ERROR
-    //bindè¿”å›0è¡¨ç¤ºæˆåŠŸï¼Œè¿”å›-1è¡¨ç¤ºå¤±è´¥
-    if (flag == SOCKET_ERROR)
-    {
-	printf("bind error !");
-	closesocket(serSocket);
-	return -1;
-    }
-    return 0;
+	printf("¼àÌı\n");
+	serAddr.sin_family = AF_INET;
+	serAddr.sin_port = htons(port);
+	serAddr.sin_addr.S_un.S_addr = INADDR_ANY;
+	int flag = bind(serSocket, (sockaddr *)&serAddr, sizeof(serAddr)) == SOCKET_ERROR;
+	//bind·µ»Ø0±íÊ¾³É¹¦£¬·µ»Ø-1±íÊ¾Ê§°Ü
+	if (flag == SOCKET_ERROR)
+	{
+		printf("bind error !");
+		closesocket(serSocket);
+		return -1;
+	}
+	printf("¼àÌı\n");
+	return 0;
 }
 
 
 string UDPServer::reveiveData()
 {
-    char recvData[255];
-    int ret = recvfrom(serSocket, recvData, 255, 0, (sockaddr *)&remoteAddr, &nAddrLen);
-    if (ret > 0)
-    {
-        recvData[ret] = 0x00;
-        printf("æ¥å—åˆ°ä¸€ä¸ªè¿æ¥ï¼š%s \r\n", inet_ntoa(remoteAddr.sin_addr));
-        printf(recvData);
-    }
+	char recvData[255];
+	printf("½ÓÊÜµ½Ò»¸öÁ¬½Ó£º\n");
+	cout << "½ÓÊÜµ½Ò»¸öÁ¬½Ó£º\n";
+	int ret = recvfrom(serSocket, recvData, 255, 0, (sockaddr *)&remoteAddr, &nAddrLen);
+	if (ret > 0)
+	{
+		recvData[ret] = 0x00;
+		//printf("½ÓÊÜµ½Ò»¸öÁ¬½Ó£º%s \r\n", inet_ntoa(remoteAddr.sin_addr));
+
+		printf(recvData);
+	}
+	string s = "cace";
+	return s;
 }
+
+void UDPServer::test()
+{
+
+	printf("²âÊÔ£º\n\n");
+
+}
+
+
