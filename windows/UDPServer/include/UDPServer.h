@@ -19,5 +19,4 @@ public:
 	UDPServer();
 	int startserver(int port);
 	string reveiveData();
-	void test();
 };

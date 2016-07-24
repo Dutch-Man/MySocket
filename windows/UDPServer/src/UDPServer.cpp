@@ -22,7 +22,6 @@ UDPServer::UDPServer()
 //绑定到端口port，成功返回0，失败返回-1
 int UDPServer::startserver(int port)
 {
-	printf("监听\n");
 	serAddr.sin_family = AF_INET;
 	serAddr.sin_port = htons(port);
 	serAddr.sin_addr.S_un.S_addr = INADDR_ANY;
@@ -34,7 +33,6 @@ int UDPServer::startserver(int port)
 		closesocket(serSocket);
 		return -1;
 	}
-	printf("监听\n");
 	return 0;
 }
 
@@ -42,8 +40,6 @@ int UDPServer::startserver(int port)
 string UDPServer::reveiveData()
 {
 	char recvData[255];
-	printf("接受到一个连接：\n");
-	cout << "接受到一个连接：\n";
 	int ret = recvfrom(serSocket, recvData, 255, 0, (sockaddr *)&remoteAddr, &nAddrLen);
 	if (ret > 0)
 	{
@@ -54,13 +50,6 @@ string UDPServer::reveiveData()
 	}
 	string s = "cace";
 	return s;
-}
-
-void UDPServer::test()
-{
-
-	printf("测试：\n\n");
-
 }
 
 
